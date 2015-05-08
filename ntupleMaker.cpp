@@ -77,6 +77,10 @@ public:
  float eta1_;
  float phi1_;
  
+ float pt2_;
+ float eta2_;
+ float phi2_;
+ 
  float mt_;
  
  void fillTree (std::string fileNameLHE);
@@ -92,6 +96,9 @@ myTree::myTree(){
  tree->Branch("pt1",&pt1_,"pt1/F");
  tree->Branch("eta1",&eta1_,"eta1/F");
  tree->Branch("phi1",&phi1_,"phi1/F");
+ tree->Branch("pt2",&pt2_,"pt2/F");
+ tree->Branch("eta2",&eta2_,"eta2/F");
+ tree->Branch("phi2",&phi2_,"phi2/F");
  tree->Branch("mt",&mt_,"mt/F");
  
 }
@@ -157,6 +164,12 @@ void myTree::fillTree(std::string fileNameLHE){
    eta1_ = v_tlv_all_leptons.at (0).Eta ();
    phi1_ = v_tlv_all_leptons.at (0).Phi ();
   }
+  if (v_tlv_all_leptons.size()>1) {
+   pt2_  = v_tlv_all_leptons.at (1).Pt ();
+   eta2_ = v_tlv_all_leptons.at (1).Eta ();
+   phi2_ = v_tlv_all_leptons.at (1).Phi ();
+  }
+  
   
   tree->Fill();
  }

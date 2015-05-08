@@ -4,7 +4,7 @@ LHE level analysis
 
 to compile:
 
-    c++ -o ntupleMaker.exe `root-config --glibs --cflags` -lm ntupleMaker.cpp
+    c++ -o ntupleMaker.exe `root-config --cflags` ntupleMaker.cpp `root-config --libs`
 
 to use:
 
