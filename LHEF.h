@@ -382,9 +382,9 @@ namespace LHEF {
     throw std::runtime_error
     ("Tried to read a file which does not start with the "
     "LesHouchesEvents tag.");
-   if ( currentLine.find("version=\"1.0\"" ) == std::string::npos )
-    throw std::runtime_error
-    ("Tried to read a LesHouchesEvents file which is not version 1.0.");
+//   if ( currentLine.find("version=\"1.0\"" ) == std::string::npos )
+//    throw std::runtime_error
+//    ("Tried to read a LesHouchesEvents file which is not version 1.0.");
    
    // Loop over all lines until we hit the </init> tag.
    while ( getline() && currentLine.find("</init>") == std::string::npos ) {
