@@ -97,7 +97,8 @@ public:
   TTree* tree;
 
   float _mww;
-
+  float _ptww;
+  
   float ptl1_;
   float etal1_;
   float phil1_;
@@ -189,7 +190,8 @@ myTree::myTree(){
   tree = new TTree("tree","tree");
 
   tree->Branch("mww",&_mww,"mww/F");
-
+  tree->Branch("ptww",&_ptww,"ptww/F");
+  
   tree->Branch("ptl1",&ptl1_,"ptl1/F");
   tree->Branch("etal1",&etal1_,"etal1/F");
   tree->Branch("phil1",&phil1_,"phil1/F");
@@ -277,7 +279,8 @@ myTree::myTree(){
 void myTree::Init(){
 
   _mww = -99;
-
+  _ptww = -99;
+  
   ptl1_= -99;
   etal1_= -99;
   phil1_= -99;
@@ -561,8 +564,8 @@ void myTree::fillTree(std::string fileNameLHE){
       mv2_   = v_tlv_all_vbosons.at (1).GetP4().M ();
       pdgIdv2_ = v_tlv_all_vbosons.at (1).GetPdgId ();
     
-     _mww = (v_tlv_all_vbosons.at (0).GetP4() + v_tlv_all_vbosons.at (1).GetP4() ).M();
-
+     _mww  = (v_tlv_all_vbosons.at (0).GetP4() + v_tlv_all_vbosons.at (1).GetP4() ).M();
+     _ptww = (v_tlv_all_vbosons.at (0).GetP4() + v_tlv_all_vbosons.at (1).GetP4() ).Pt();
    }
 
     // hbosons
