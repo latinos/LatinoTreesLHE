@@ -560,7 +560,11 @@ void myTree::fillTree(std::string fileNameLHE){
       phiv2_ = v_tlv_all_vbosons.at (1).GetP4().Phi ();
       mv2_   = v_tlv_all_vbosons.at (1).GetP4().M ();
       pdgIdv2_ = v_tlv_all_vbosons.at (1).GetPdgId ();
-    }
+    
+     _mww = (v_tlv_all_vbosons.at (0).GetP4() + v_tlv_all_vbosons.at (1).GetP4() ).M();
+
+   }
+
     // hbosons
     if (v_tlv_all_hbosons.size()>0) {
       pth1_  = v_tlv_all_hbosons.at (0).GetP4().Pt ();
@@ -569,13 +573,9 @@ void myTree::fillTree(std::string fileNameLHE){
       mh1_   = v_tlv_all_hbosons.at (0).GetP4().M ();
       pdgIdh1_ = v_tlv_all_hbosons.at (0).GetPdgId ();
     }
-
-    _mww = (v_tlv_all_vbosons.at (0).GetP4() + v_tlv_all_vbosons.at (1).GetP4() ).M();
-
+    
+    tree->Fill();
   }
-
-  tree->Fill();
-}
 
 }
 
