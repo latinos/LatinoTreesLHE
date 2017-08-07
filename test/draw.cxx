@@ -97,6 +97,7 @@ void draw(std::string nameInFileRootOne,
   h_2->SetLineStyle(3);
   
   h_1->GetXaxis()->SetTitle(varHR.c_str());
+  h_2->GetXaxis()->SetTitle(varHR.c_str());
   
   
   TLegend* leg = new TLegend(0.80,0.70,0.95,0.90);
@@ -123,8 +124,20 @@ void draw(std::string nameInFileRootOne,
   h_1->DrawNormalized("hist");
   h_2->DrawNormalized("hist same");
   
-  leg->Draw();
-  cnNorm->SetGrid();
+  leg->Draw(); 
+  cnNorm->SetGrid(); 
+  
+  //---- draw ratio
+  TCanvas* cnRatio = new TCanvas ("cnRatio","cnRatio",800,600);
+  
+  // Define the ratio plot
+  TH1F *h_ratio  = (TH1F*) h_2->Clone("h_ratio");
+  h_ratio->GetYaxis()->SetTitle("after / before");
+  h_ratio->SetLineColor(kBlack);
+  h_ratio->SetStats(0);     
+  h_ratio->Divide(h_1);
+  h_ratio->SetMarkerStyle(21);
+  h_ratio->Draw("histo");      
   
   
 }
