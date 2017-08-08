@@ -74,7 +74,8 @@ void drawKl(std::string nameInFileRootOne,
   h_2->Sumw2();
   
   TString weight = Form ("evtWeight");
-//   TString weight = Form ("1");
+//   TString weight = Form ("evtWeight * mqq>20");
+  //   TString weight = Form ("1");
   TString toDraw;
     
   toDraw = Form ("%s >> h_1",var.c_str());

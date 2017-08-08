@@ -137,6 +137,9 @@ public:
   float mq2_;
   int   pdgIdq2_;
   
+  float _mqq;
+  
+  
   float ptq3_;
   float etaq3_;
   float phiq3_;
@@ -246,6 +249,9 @@ myTree::myTree(){
   tree->Branch("mq2",&mq2_,"mq2/F");
   tree->Branch("pdgIdq2",&pdgIdq2_,"pdgIdq2/I");
   
+  tree->Branch("mqq",&_mqq,"mqq/F");
+  
+  
   tree->Branch("ptq3",&ptq3_,"ptq3/F");
   tree->Branch("etaq3",&etaq3_,"etaq3/F");
   tree->Branch("phiq3",&phiq3_,"phiq3/F");
@@ -322,6 +328,8 @@ void myTree::Init(){
   phiq2_= -99;
   mq2_= -99;
   pdgIdq2_= -99;
+  
+  _mqq = -99.;
   
   ptq3_= -99;
   etaq3_= -99;
@@ -526,6 +534,9 @@ void myTree::fillTree(std::string fileNameLHE){
       phiq2_ = v_tlv_all_quarks.at (1).GetP4().Phi ();
       mq2_   = v_tlv_all_quarks.at (1).GetP4().M ();
       pdgIdq2_ = v_tlv_all_quarks.at (1).GetPdgId ();
+      
+      _mqq = (v_tlv_all_quarks.at (0).GetP4() + v_tlv_all_quarks.at (1).GetP4()).M();
+      
     }
     if (v_tlv_all_quarks.size()>2) {
       ptq3_  = v_tlv_all_quarks.at (2).GetP4().Pt ();
