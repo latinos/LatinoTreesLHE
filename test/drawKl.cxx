@@ -34,9 +34,10 @@ TH1F * DrawOverflow(TH1F *h) {
 
 #include "TDRStyle.cc"
 
-void draw(std::string nameInFileRootOne, 
-          std::string nameInFileRootTwo, 
-          std::string var = "etaSC", int NBIN = 1000, float MIN = 0, float MAX = 1000, std::string varHR = ""
+void drawKl(std::string nameInFileRootOne, 
+            std::string nameInFileRootTwo,
+            float kl = 1,
+            std::string var = "etaSC", int NBIN = 1000, float MIN = 0, float MAX = 1000, std::string varHR = ""
           ) {
   
    
@@ -86,9 +87,20 @@ void draw(std::string nameInFileRootOne,
   //---- the h_2 as drawn from ttree is the 
   //---- EWK correction to the Born production
   //
-//   
-//   h_2->Add(h_1);
-//   
+  
+  TH1F* h_3 = (TH1F*) h_2 -> Clone ("afterMinusKl");
+  
+  h_2->Scale(1-kl);
+  h_3->Scale(1+kl);
+  
+  h_2->Add(h_1);
+  h_3->Add(h_1);
+  
+  //---- 
+  //----    h_1 + (1 +/- kl) * h_2
+  //---- 
+  
+  
   //----
   
   
@@ -99,55 +111,79 @@ void draw(std::string nameInFileRootOne,
   h_2->SetMarkerSize  (0);
   h_2->SetMarkerColor (kRed);
   h_2->SetLineColor   (kRed);
-
+  
+  h_3->SetMarkerSize  (0);
+  h_3->SetMarkerColor (kOrange+2);
+  h_3->SetLineColor   (kOrange+2);
+  
+  
   h_1->SetLineWidth(2);
   h_2->SetLineWidth(2);
+  h_3->SetLineWidth(2);
   
   h_1->SetLineStyle(2);
   h_2->SetLineStyle(3);
+  h_3->SetLineStyle(4);
   
   h_1->GetXaxis()->SetTitle(varHR.c_str());
   h_2->GetXaxis()->SetTitle(varHR.c_str());
+  h_3->GetXaxis()->SetTitle(varHR.c_str());
   
   
   TLegend* leg = new TLegend(0.80,0.70,0.95,0.90);
   leg->AddEntry(h_1, h_1->GetTitle(), "l");
-  leg->AddEntry(h_2, h_2->GetTitle(), "l");
+  leg->AddEntry(h_2, Form("k_{#lambda} =  %1.2f", kl) , "l");
+  leg->AddEntry(h_3, Form("k_{#lambda} =  %1.2f", -kl), "l");
   leg->SetFillStyle(0);
 
   //---- overflow bin
   h_1 = DrawOverflow(h_1);
   h_2 = DrawOverflow(h_2);
+  h_3 = DrawOverflow(h_3);
   
   //---- draw
-  TCanvas* cn = new TCanvas ("cn","cn",800,600);
+  TCanvas* cn = new TCanvas ("cn","cn",900,600);
   
   h_1->Draw("hist");
   h_2->Draw("hist same");
+  h_3->Draw("hist same");
   
   leg->Draw();
   cn->SetGrid();
 
   //---- draw
-  TCanvas* cnNorm = new TCanvas ("cnNorm","cnNorm",800,600);
+  TCanvas* cnNorm = new TCanvas ("cnNorm","cnNorm",900,600);
   
   h_1->DrawNormalized("hist");
   h_2->DrawNormalized("hist same");
+  h_3->DrawNormalized("hist same");
   
   leg->Draw(); 
   cnNorm->SetGrid(); 
   
   //---- draw ratio
-  TCanvas* cnRatio = new TCanvas ("cnRatio","cnRatio",800,600);
+  TCanvas* cnRatio = new TCanvas ("cnRatio","cnRatio",900,600);
   
   // Define the ratio plot
-  TH1F *h_ratio  = (TH1F*) h_2->Clone("h_ratio");
-  h_ratio->GetYaxis()->SetTitle("after / before");
-  h_ratio->SetLineColor(kBlack);
-  h_ratio->SetStats(0);     
-  h_ratio->Divide(h_1);
-  h_ratio->SetMarkerStyle(21);
-  h_ratio->Draw("histo");      
+  TH1F *h_ratio_2  = (TH1F*) h_2->Clone("h_ratio_2");
+  h_ratio_2->GetYaxis()->SetTitle("after / before");
+  h_ratio_2->SetLineColor(kRed);
+  h_ratio_2->SetStats(0);     
+  h_ratio_2->Divide(h_1);
+  h_ratio_2->SetMarkerStyle(21);
+  h_ratio_2->Draw("histo");      
+  h_ratio_2->GetYaxis()->SetRangeUser(0.7, 1.3);
+  
+  TH1F *h_ratio_3  = (TH1F*) h_3->Clone("h_ratio_3");
+  h_ratio_3->GetYaxis()->SetTitle("after / before");
+  h_ratio_3->SetLineColor(kOrange+2);
+  h_ratio_3->SetStats(0);     
+  h_ratio_3->Divide(h_1);
+  h_ratio_3->SetMarkerStyle(21);
+  h_ratio_3->Draw("histo same");      
+  
+  leg->Draw();
+  cnRatio->SetGrid(); 
   
   
 }
