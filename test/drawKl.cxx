@@ -91,14 +91,14 @@ void drawKl(std::string nameInFileRootOne,
   
   TH1F* h_3 = (TH1F*) h_2 -> Clone ("afterMinusKl");
   
-  h_2->Scale(1-kl);
-  h_3->Scale(1+kl);
+  h_2->Scale(-kl-1);
+  h_3->Scale( kl-1);
   
   h_2->Add(h_1);
   h_3->Add(h_1);
   
   //---- 
-  //----    h_1 + (1 +/- kl) * h_2
+  //----    h_1 + (+/-kl-1) * h_2
   //---- 
   
   
