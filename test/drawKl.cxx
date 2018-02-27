@@ -175,6 +175,15 @@ void drawKl(std::string nameInFileRootOne,
   h_ratio_2->Draw("histo");      
   h_ratio_2->GetYaxis()->SetRangeUser(0.7, 1.3);
   
+  TGraph* gr_ratio = new TGraph();
+  for (int ibin=0; ibin<h_ratio_2->GetNbinsX(); ibin++) {
+    gr_ratio->SetPoint (ibin, h_ratio_2->GetBinCenter(ibin+1), h_ratio_2->GetBinContent(ibin+1));
+  }
+  gr_ratio->SetName("gr_ratio");
+  gr_ratio->Draw("PL");
+  gr_ratio->SaveAs("ratio.root");
+  
+  
   TH1F *h_ratio_3  = (TH1F*) h_3->Clone("h_ratio_3");
   h_ratio_3->GetYaxis()->SetTitle("after / before");
   h_ratio_3->SetLineColor(kOrange+2);
