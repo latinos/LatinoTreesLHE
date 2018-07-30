@@ -208,7 +208,7 @@ void drawKlComplete(std::string nameInFileRootOne,
   
   // Define the ratio plot
   TH1F *h_ratio_2  = (TH1F*) h_NLO_BSM_plus->Clone("h_ratio_2");
-  h_ratio_2->GetYaxis()->SetTitle("after / before");
+  h_ratio_2->GetYaxis()->SetTitle("XX / LO");
   h_ratio_2->SetLineColor(kRed);
   h_ratio_2->SetStats(0);     
   h_ratio_2->Divide(h_1);
@@ -226,7 +226,7 @@ void drawKlComplete(std::string nameInFileRootOne,
   
   
   TH1F *h_ratio_3  = (TH1F*) h_NLO_BSM_minus->Clone("h_ratio_3");
-  h_ratio_3->GetYaxis()->SetTitle("after / before");
+  h_ratio_3->GetYaxis()->SetTitle("XX / LO");
   h_ratio_3->SetLineColor(kOrange+2);
   h_ratio_3->SetStats(0);     
   h_ratio_3->Divide(h_1);
@@ -235,7 +235,7 @@ void drawKlComplete(std::string nameInFileRootOne,
 
 
   TH1F *h_ratio_4  = (TH1F*) h_NLO->Clone("h_ratio_4");
-  h_ratio_4->GetYaxis()->SetTitle("after / before");
+  h_ratio_4->GetYaxis()->SetTitle("XX / LO");
   h_ratio_4->SetLineColor(kRed);
   h_ratio_4->SetStats(0);     
   h_ratio_4->Divide(h_1);
